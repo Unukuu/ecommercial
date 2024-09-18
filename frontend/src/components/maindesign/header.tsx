@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { CiHeart } from "react-icons/ci";
 import { FiShoppingCart } from "react-icons/fi";
 import { Input } from "../ui/input";
-import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 const Header = () => {
@@ -13,7 +12,6 @@ const Header = () => {
     <nav className="bg-black flex px-6 py-4 justify-between">
       <div className="flex justify-center items-center gap-8">
         <Link href="/">
-          {" "}
           <div className="flex justify-center items-center gap-2">
             <img src="/image/Vector.png" alt="" className="w-8 h-7" />
             <p className="text-white text-sm">ECOMMERCE</p>
