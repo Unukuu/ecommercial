@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 const Signin = () => {
   const router = useRouter();
   return (
-    <div className="h-[745px]">
+    <div>
       <div className="flex flex-col w-[334px] justify-center m-auto gap-4 py-4 my-24">
         <p className="text-center text-2xl font-bold">Нэвтрэх</p>
         <Input type="email" placeholder="Имэйл хаяг" className="rounded-2xl" />
