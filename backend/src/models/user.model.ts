@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-
+import bycript from "bcrypt";
 interface iUser {
   _id: Schema.Types.ObjectId;
   firstname: string;
@@ -52,5 +52,16 @@ const userSchema = new Schema<iUser>({
     default: Date.now,
   },
 });
+
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password")) {
+    next();
+  } else {
+    const hashedPass = bycript.hashSync(this.password, 10);
+    this.password = hashedPass;
+    next();
+  }
+});
+
 const User = model("User", userSchema);
 export default User;
