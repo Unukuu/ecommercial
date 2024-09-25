@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
 import User from "../models/user.model";
 import bcrypt from "bcrypt";
-
-const TOKENPASS = process.env.TOKENPASS || "";
+import { generateToken } from "../utils/jwt";
 
 export const signup = async (req: Request, res: Response) => {
   try {
@@ -19,9 +17,9 @@ export const signup = async (req: Request, res: Response) => {
       phoneNumber: "99112233",
     });
     res.status(201).json({ message: "success", user: createdUSer });
-  } catch (error) {
+  } catch (error: any) {
     console.log("error", error);
-    res.status(500).json({ message: "Server Error", error: error });
+    res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
 
@@ -39,9 +37,7 @@ export const login = async (req: Request, res: Response) => {
           .status(400)
           .json({ message: "hereglegchiin email esvel nuuts ug buruu baina" });
       } else {
-        const token = jwt.sign({ id: user._id }, TOKENPASS, {
-          expiresIn: "1h",
-        });
+        const token = generateToken({ id: user._id.toString() });
         res.status(200).json({ message: "success", token: token });
       }
     }
