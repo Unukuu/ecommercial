@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Link from "next/link";
 const Signin = () => {
   const router = useRouter();
   const [userData, setUserData] = useState({
@@ -58,9 +59,11 @@ const Signin = () => {
         >
           Нэвтрэх
         </Button>
-        <div className="flex items-center justify-center">
-          <span className=" text-[#71717A] border-b-2">Нууц үг мартсан</span>
-        </div>
+        <Link href="/forgetpass">
+          <div className="flex items-center justify-center">
+            <span className=" text-[#71717A] border-b-2">Нууц үг мартсан</span>
+          </div>
+        </Link>
         <Button
           onClick={() => {
             router.push("/signup");

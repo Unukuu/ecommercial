@@ -46,3 +46,7 @@ export const login = async (req: Request, res: Response) => {
     res.status(404).json({ message: "error", user: error });
   }
 };
+export const forgetPassword = async (req: Request, res: Response) => {
+  const { email } = req.body;
+  const findUser = await User.findOne({ email: email });
+};

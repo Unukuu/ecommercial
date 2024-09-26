@@ -6,6 +6,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { DropdownMenuDemo } from "./dropdownpage";
 const Header = () => {
   const router = useRouter();
   return (
@@ -43,6 +44,7 @@ const Header = () => {
         >
           Нэвтрэх
         </Button>
+        <DropdownMenuDemo />
       </div>
     </nav>
   );
