@@ -5,12 +5,18 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { InputOTPPattern } from "@/components/maindesign/inputotp";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 const ForgetPass = () => {
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const [otpValue, setOtpValue] = useState("");
   const [email, setEmail] = useState("");
-  const [countdown, setCountdown] = useState(30);
+  const [countdown, setCountdown] = useState(60);
 
   const handleEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -21,6 +27,10 @@ const ForgetPass = () => {
         "http://localhost:8000/api/v1/auth/forget-password",
         { email }
       );
+      if (res.status === 200) {
+        setStep(step + 1);
+        toast.success("tanii emailruu 4 orontoi code ilgeelee");
+      }
     } catch (error) {
       console.log("email ilgeehed aldaa garlaa", error);
       toast.error("email ilgeehed aldaa garlaa");
@@ -29,6 +39,23 @@ const ForgetPass = () => {
 
   const handleResendOTP = () => {
     setCountdown(30);
+  };
+  const handleConfirmOTP = async (value: string) => {
+    setOtpValue(value);
+    if (value.length === 4) {
+      try {
+        const res = await axios.post(
+          "http://localhost:8000/api/v1/auth/verify-otp",
+          { email, otpValue: value }
+        );
+        if (res.status === 200) {
+          toast.success("nuuts ug sergeeh holboosiig emailruu ilgeelee");
+          router.push("/signin");
+        }
+      } catch (error) {
+        toast.error("OTP tohirohgui baina");
+      }
+    }
   };
   useEffect(() => {
     if (countdown > 0) {
@@ -62,10 +89,20 @@ const ForgetPass = () => {
         <div className="py-8 items-center justify-center flex flex-col gap-6">
           <img src="" alt="" />
           <h1 className="text-2xl font-bold">Баталгаажуулах</h1>
-          <p>
-            “mujo@nest.edu.mn” хаягт илгээсэн баталгаажуулах кодыг оруулна уу
-          </p>
-          <InputOTPPattern />
+          <p>{`“${email}” хаягт илгээсэн баталгаажуулах кодыг оруулна уу`}</p>
+          <InputOTP
+            maxLength={4}
+            pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+            value={otpValue}
+            onChange={handleConfirmOTP}
+          >
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+              <InputOTPSlot index={3} />
+            </InputOTPGroup>
+          </InputOTP>
           <p>Дахин илгээх ({countdown})</p>
         </div>
       )}
