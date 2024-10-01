@@ -1,7 +1,7 @@
 const Slider = () => {
   return (
     <div>
-      <p className="text-9xl">Slider</p>
+      <div className=""></div>
     </div>
   );
 };

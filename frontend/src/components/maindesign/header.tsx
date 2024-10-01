@@ -7,8 +7,11 @@ import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { DropdownMenuDemo } from "./dropdownpage";
+import { useContext } from "react";
+import { UserContext } from "@/app/context/user-context";
 const Header = () => {
   const router = useRouter();
+  const { user, fetchUserData } = useContext(UserContext);
   return (
     <nav className="bg-black flex px-6 py-4 justify-between">
       <div className="flex justify-center items-center gap-8">
@@ -28,23 +31,28 @@ const Header = () => {
       <div className="text-white flex justify-center items-center gap-6 text-2xl">
         <CiHeart />
         <FiShoppingCart />
-        <Button
-          variant="outline"
-          onClick={() => {
-            router.push("/signup");
-          }}
-        >
-          Бүртгүүлэх
-        </Button>
-        <Button
-          className="bg-blue-600 hover:bg-white hover:text-black"
-          onClick={() => {
-            router.push("/signin");
-          }}
-        >
-          Нэвтрэх
-        </Button>
-        <DropdownMenuDemo />
+        {!user ? (
+          <>
+            <Button
+              variant="outline"
+              onClick={() => {
+                router.push("/signup");
+              }}
+            >
+              Бүртгүүлэх
+            </Button>
+            <Button
+              className="bg-blue-600 hover:bg-white hover:text-black"
+              onClick={() => {
+                router.push("/signin");
+              }}
+            >
+              Нэвтрэх
+            </Button>
+          </>
+        ) : (
+          <DropdownMenuDemo />
+        )}
       </div>
     </nav>
   );

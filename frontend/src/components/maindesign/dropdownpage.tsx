@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { CiUser } from "react-icons/ci";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,12 +10,16 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 export function DropdownMenuDemo() {
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="outline">
+          <CiUser />
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -26,7 +31,12 @@ export function DropdownMenuDemo() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            localStorage.removeItem("token");
+            router.push("/signin");
+          }}
+        >
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
