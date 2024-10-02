@@ -11,8 +11,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { UserContext } from "@/app/context/user-context";
 
 export function DropdownMenuDemo() {
+  const { setToken, setUser } = useContext(UserContext);
   const router = useRouter();
   return (
     <DropdownMenu>
@@ -34,6 +37,8 @@ export function DropdownMenuDemo() {
         <DropdownMenuItem
           onClick={() => {
             localStorage.removeItem("token");
+            setToken(null);
+            setUser(null);
             router.push("/signin");
           }}
         >

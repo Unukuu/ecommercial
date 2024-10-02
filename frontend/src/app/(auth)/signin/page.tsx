@@ -2,11 +2,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Link from "next/link";
+import { UserContext } from "@/app/context/user-context";
 const Signin = () => {
+  const { setToken } = useContext(UserContext);
   const router = useRouter();
   const [userData, setUserData] = useState({
     email: "",
@@ -24,6 +26,7 @@ const Signin = () => {
         toast.success("Амжилттай нэвтэрлээ", { autoClose: 1000 });
         const { token } = res.data;
         localStorage.setItem("token", token);
+        setToken(token);
         router.push("/");
       }
     } catch (error) {

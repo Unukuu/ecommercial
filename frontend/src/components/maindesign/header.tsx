@@ -11,7 +11,7 @@ import { useContext } from "react";
 import { UserContext } from "@/app/context/user-context";
 const Header = () => {
   const router = useRouter();
-  const { user, fetchUserData } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   return (
     <nav className="bg-black flex px-6 py-4 justify-between">
       <div className="flex justify-center items-center gap-8">
@@ -21,8 +21,9 @@ const Header = () => {
             <p className="text-white text-sm">ECOMMERCE</p>
           </div>
         </Link>
-
-        <p className="text-white text-sm">Ангилал</p>
+        <Link href="/category">
+          <p className="text-white text-sm">Ангилал</p>
+        </Link>
       </div>
       <div className="flex justify-center items-center px-4 py-2 bg-[#18181B] text-gray-200 text-4xl rounded-3xl">
         <IoSearchSharp />
