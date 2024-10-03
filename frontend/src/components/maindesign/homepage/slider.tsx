@@ -1,4 +1,5 @@
 import { ProductContext } from "@/app/context/product-context";
+import Link from "next/link";
 import { useContext } from "react";
 
 const Slider = () => {
@@ -14,24 +15,26 @@ const Slider = () => {
         {products?.map((product, i) => {
           return (
             <>
-              {i === 6 || i === 7 ? (
-                <div className="col-span-2 row-span-2">
-                  <div className="h-[692px] w-full rounded-2xl overflow-hidden">
-                    <img src={product.images[0]} alt="" className="w-full" />
+              <Link href={"/" + product._id}>
+                {i === 6 || i === 7 ? (
+                  <div className="col-span-2 row-span-2 bg-red-400">
+                    <div className="h-[692px] w-full rounded-2xl overflow-hidden">
+                      <img src={product.images[0]} alt="" className="w-full" />
+                    </div>
+                    <p>{product.name}</p>
+                    <p className="font-bold">{product.price}</p>
                   </div>
-                  <p>{product.name}</p>
-                  <p className="font-bold">{product.price}</p>
-                </div>
-              ) : (
-                <div>
-                  <div className="h-[331px] w-full rounded-2xl overflow-hidden">
-                    <img src={product.images[0]} alt="" className="w-full" />
-                  </div>
+                ) : (
+                  <div>
+                    <div className="h-[331px] w-full rounded-2xl overflow-hidden">
+                      <img src={product.images[0]} alt="" className="w-full" />
+                    </div>
 
-                  <p>{product.name}</p>
-                  <p className="font-bold">{product.price}</p>
-                </div>
-              )}
+                    <p>{product.name}</p>
+                    <p className="font-bold">{product.price}</p>
+                  </div>
+                )}
+              </Link>
             </>
           );
         })}

@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/user-context";
 import { ProductProvider } from "./context/product-context";
+import { CategoryProvider } from "./context/category-context";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,12 +36,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ProductProvider>
-          <UserProvider>
-            <Header />
-            {children}
-            <Footer />
-            <ToastContainer />
-          </UserProvider>
+          <CategoryProvider>
+            <UserProvider>
+              <Header />
+              {children}
+              <Footer />
+              <ToastContainer />
+            </UserProvider>
+          </CategoryProvider>
         </ProductProvider>
       </body>
     </html>
