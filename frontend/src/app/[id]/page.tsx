@@ -6,11 +6,29 @@ import { useParams } from "next/navigation";
 import { CiHeart } from "react-icons/ci";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { Button } from "@/components/ui/button";
+import { FaStar } from "react-icons/fa";
+import CommentSection from "@/components/maindesign/comment";
+import RatingStar from "@/components/maindesign/ratingstar";
 
 const ProductDetail = () => {
   const [isTrue, setIstrue] = useState(true);
+  const [count, setCount] = useState(0);
+  const [rate, setRate] = useState(0);
+  const [isComment, setIsComment] = useState(true);
   const { id } = useParams();
-  const [product, setProduct] = useState({ name: "" });
+  const [product, setProduct] = useState({
+    name: "",
+    price: "",
+    description: "",
+    size: "",
+    images: "",
+    isNew: true,
+    _id: "",
+    quantity: 0,
+    discount: 0,
+    category: "",
+  });
   const getProduct = async (id: string | string[]) => {
     try {
       const res = await axios.get(
@@ -55,12 +73,14 @@ const ProductDetail = () => {
           <img src="/image/1st.png" alt="" />
         </div>
       </div>
-      <div className="flex-1 ">
-        <span className="text-xs font-bold py-1 px-3 border border-blue-600 rounded-2xl">
-          New
-        </span>
+      <div className="flex-1 flex gap-5 flex-col">
+        <div>
+          <span className="text-xs font-bold py-1 px-3 border border-blue-600 rounded-2xl">
+            New
+          </span>
+        </div>
         <div className="flex items-center gap-4">
-          <p className="text-2xl font-bold">Name</p>
+          <p className="text-2xl font-bold">{product.name}</p>
           {isTrue ? (
             <CiHeart
               className="text-3xl"
@@ -77,7 +97,7 @@ const ProductDetail = () => {
             />
           )}
         </div>
-        <p>Зэрлэг цэцгийн зурагтай даавуун материалтай цамц</p>
+        <p>{product.description}</p>
         <div>
           <p>Хэмжээний заавар</p>
           <div className="flex gap-2 text-xs">
@@ -98,19 +118,49 @@ const ProductDetail = () => {
             </p>
           </div>
         </div>
-        <div className="">
-          <button>-</button>
-          <p>1</p>
-          <button>+</button>
+        <div className="flex items-center gap-3">
+          <button
+            className="border border-black rounded-full w-8 h-8 flex justify-center items-center hover:bg-gray-300"
+            onClick={() => {
+              setCount(count - 1);
+            }}
+          >
+            -
+          </button>
+          <p>{count}</p>
+          <button
+            className="border border-black rounded-full w-8 h-8 flex justify-center items-center hover:bg-gray-300"
+            onClick={() => {
+              setCount(count + 1);
+            }}
+          >
+            +
+          </button>
         </div>
-        <div>
+        <div className="flex flex-col gap-1">
+          <p className="text-xl font-bold">{product.price}</p>
           <div>
+            <Button className="bg-[#2563EB] rounded-2xl">Сагсанд нэмэх</Button>
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <div className="flex items-center gap-4">
             <p>Үнэлгээ</p>
-            <button>бүгдийг харах</button>
+            <button
+              className="text-[#2563EB] "
+              onClick={() => {
+                setIsComment(false);
+              }}
+            >
+              бүгдийг харах
+            </button>
           </div>
-          <div>
-            <p>stars</p>
+          <div className="flex items-center gap-2">
+            <RatingStar rate={rate} setRate={setRate} />
+            <p className="font-bold">{rate}</p>
+            <span className="text-gray-400">(24)</span>
           </div>
+          {isComment ? "" : <CommentSection />}
         </div>
       </div>
     </div>
