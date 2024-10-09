@@ -31,7 +31,9 @@ const Header = () => {
       </div>
       <div className="text-white flex justify-center items-center gap-6 text-2xl">
         <CiHeart />
-        <FiShoppingCart />
+        <Link href={"/buysteps"}>
+          <FiShoppingCart />
+        </Link>
         {!user ? (
           <>
             <Button

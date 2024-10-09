@@ -5,9 +5,11 @@ import React, {
   createContext,
   Dispatch,
   SetStateAction,
+  useContext,
   useEffect,
   useState,
 } from "react";
+import { CartContext } from "./cart-context";
 
 interface IUserCOntext {
   user: {
@@ -40,9 +42,9 @@ export const UserContext = createContext<IUserCOntext>({
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const { setCartProduct, cartProduct } = useContext(CartContext);
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState(null);
-
   const fetchUserData = async () => {
     try {
       console.log("user user");

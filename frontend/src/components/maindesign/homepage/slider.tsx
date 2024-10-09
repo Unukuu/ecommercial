@@ -12,7 +12,7 @@ const Slider = () => {
         <p className="text-4xl font-bold">120'000₮</p>
       </div>
       <div className="m-auto container grid grid-cols-4 gap-5 my-10 grid-row-6">
-        {products?.map((product, i) => {
+        {products?.slice(0, 14).map((product, i) => {
           return (
             <>
               {i === 6 || i === 7 ? (
