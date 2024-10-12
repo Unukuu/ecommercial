@@ -10,17 +10,13 @@ import { Button } from "@/components/ui/button";
 import { FaStar } from "react-icons/fa";
 import CommentSection from "@/components/maindesign/comment";
 import RatingStar from "@/components/maindesign/ratingstar";
-import { CartContext } from "../context/cart-context";
 
 const ProductDetail = () => {
-  const { addCartProduct, setCartProduct, cartProduct } =
-    useContext(CartContext);
   const { products } = useContext(ProductContext);
   const [isTrue, setIstrue] = useState(true);
   const [count, setCount] = useState(0);
   const [rate, setRate] = useState(0);
   const [isComment, setIsComment] = useState(true);
-  const [totalAmount, setTotalAmount] = useState(0);
   const { id } = useParams();
   const [product, setProduct] = useState({
     name: "",
@@ -47,15 +43,7 @@ const ProductDetail = () => {
   };
   useEffect(() => {
     getProduct(id);
-    setTotalAmount(count * product.price);
-    setCartProduct({
-      ...cartProduct,
-      productId: id as string,
-      totalAmount,
-      quantity: count,
-    });
   }, [count]);
-  console.log("====>", cartProduct);
   return (
     <>
       <div className="flex  container m-auto p-12 gap-5">
@@ -153,12 +141,7 @@ const ProductDetail = () => {
           <div className="flex flex-col gap-1">
             <p className="text-xl font-bold">{product.price}</p>
             <div>
-              <Button
-                className="bg-[#2563EB] rounded-2xl"
-                onClick={() => {
-                  addCartProduct();
-                }}
-              >
+              <Button className="bg-[#2563EB] rounded-2xl" onClick={() => {}}>
                 Сагсанд нэмэх
               </Button>
             </div>
