@@ -46,7 +46,7 @@ const Category = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-5">
-        {products?.map((product, i) => {
+        {products?.map((product) => {
           return (
             <>
               <div>

@@ -43,7 +43,7 @@ const ProductDetail = () => {
   };
   useEffect(() => {
     getProduct(id);
-  }, [count]);
+  }, []);
   return (
     <>
       <div className="flex  container m-auto p-12 gap-5">
