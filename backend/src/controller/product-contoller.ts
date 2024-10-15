@@ -50,3 +50,16 @@ export const getProduct = async (req: Request, res: Response) => {
     res.status(400).json({ message: "failed to get one product" });
   }
 };
+export const addComment = async (req: Request, res: Response) => {
+  const { starRating, comment, user } = req.body;
+  const { productId } = req.params;
+  try {
+    const product = await Product.findById(productId).populate("User");
+    product?.commentSec.push({ starRating, comment, user });
+    const updatedComment = await product?.save();
+    res.status(200).json({ message: "success", updatedComment });
+  } catch (error) {
+    console.log("====> comment section aldaa", error);
+    res.status(400).json({ message: "aldaa garlaa", error: error });
+  }
+};

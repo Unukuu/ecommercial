@@ -9,6 +9,9 @@ interface iProduct {
   isNew: boolean;
   quantity: number;
   discount: number;
+  commentSec: [
+    { user: Schema.Types.ObjectId; starRating: number; comment: string }
+  ];
   category: Schema.Types.ObjectId;
 }
 const productSchema = new Schema<iProduct>(
@@ -47,6 +50,23 @@ const productSchema = new Schema<iProduct>(
       required: true,
       ref: "Category",
     },
+    commentSec: [
+      {
+        user: {
+          type: String,
+          ref: "User",
+          required: true,
+        },
+        starRating: {
+          type: Number,
+          required: true,
+        },
+        comment: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

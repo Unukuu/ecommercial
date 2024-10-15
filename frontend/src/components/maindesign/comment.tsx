@@ -1,5 +1,3 @@
-import RatingStar from "./ratingstar";
-
 const CommentSection = () => {
   return (
     <div className=" flex flex-col justify-center border-b border-dotted py-4">

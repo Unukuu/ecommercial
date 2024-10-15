@@ -7,15 +7,16 @@ import { CiHeart } from "react-icons/ci";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
-import { FaStar } from "react-icons/fa";
+import { Rating } from "@smastrom/react-rating";
+
+import "@smastrom/react-rating/style.css";
 import CommentSection from "@/components/maindesign/comment";
-import RatingStar from "@/components/maindesign/ratingstar";
 
 const ProductDetail = () => {
+  const [rating, setRating] = useState(0);
   const { products } = useContext(ProductContext);
   const [isTrue, setIstrue] = useState(true);
   const [count, setCount] = useState(0);
-  const [rate, setRate] = useState(0);
   const [isComment, setIsComment] = useState(true);
   const { id } = useParams();
   const [product, setProduct] = useState({
@@ -159,8 +160,14 @@ const ProductDetail = () => {
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <RatingStar rate={rate} setRate={setRate} />
-              <p className="font-bold">{rate}</p>
+              <Rating
+                style={{ maxWidth: 100 }}
+                value={rating}
+                onChange={setRating}
+                isRequired
+              />
+              {/* <RatingStar rate={rate} setRate={setRate} /> */}
+              <p className="font-bold">{rating}</p>
               <span className="text-gray-400">(24)</span>
             </div>
             {isComment ? "" : <CommentSection />}
