@@ -14,14 +14,18 @@ import CommentSection from "@/components/maindesign/comment";
 
 const ProductDetail = () => {
   const [rating, setRating] = useState(0);
+  const [avgRating, setAvgrating] = useState(0);
+  const [refetch, setRefetch] = useState(true);
   const { products } = useContext(ProductContext);
   const [isTrue, setIstrue] = useState(true);
   const [count, setCount] = useState(0);
   const [isComment, setIsComment] = useState(true);
   const { id } = useParams();
+
   const [product, setProduct] = useState({
     name: "",
     price: 0,
+    commentSec: [{ starRating: 0 }],
     description: "",
     size: "",
     images: "",
@@ -31,24 +35,31 @@ const ProductDetail = () => {
     discount: 0,
     category: "",
   });
+  const sumrating =
+    product.commentSec.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.starRating;
+    }, 0) / product.commentSec.length;
   const getProduct = async (id: string | string[]) => {
     try {
       const res = await axios.get(
         `http://localhost:8000/api/v1/products/${id}`
       );
       setProduct(res.data.product);
+      setRefetch(!refetch);
     } catch (error) {
       console.log("error", error);
       toast.error("aldaa garlaa product detail error");
     }
   };
+  const avgStar = () => {};
+  console.log("ene mai ene prodcutaa av", sumrating);
   useEffect(() => {
     getProduct(id);
   }, []);
   return (
     <>
       <div className="flex  container m-auto p-12 gap-5">
-        <div className="flex-1 flex gap-5  justify-end items-center">
+        <div className="flex-1 flex gap-5  justify-end ">
           <div className=" flex flex-col gap-3">
             <img
               src="/image/1st.png"
@@ -153,30 +164,26 @@ const ProductDetail = () => {
               <button
                 className="text-[#2563EB] "
                 onClick={() => {
-                  setIsComment(false);
+                  setIsComment(!isComment);
                 }}
               >
                 бүгдийг харах
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <Rating
-                style={{ maxWidth: 100 }}
-                value={rating}
-                onChange={setRating}
-                isRequired
-              />
-              {/* <RatingStar rate={rate} setRate={setRate} /> */}
-              <p className="font-bold">{rating}</p>
-              <span className="text-gray-400">(24)</span>
+              <Rating style={{ maxWidth: 150 }} value={sumrating} readOnly />
+              <p className="font-bold">{sumrating}</p>
+              <span className="text-gray-400">
+                ({product.commentSec.length})
+              </span>
             </div>
-            {isComment ? "" : <CommentSection />}
+            {isComment ? "" : <CommentSection id={id} />}
           </div>
         </div>
       </div>
       <p className="font-bold text-3xl container m-auto">Холбоотой бараа</p>
       <div className="grid grid-cols-3 gap-5 container m-auto">
-        {products?.slice(0, 6).map((product, i) => {
+        {products?.slice(0, 6).map((product) => {
           return (
             <>
               <div>

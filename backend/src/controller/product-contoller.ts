@@ -43,7 +43,10 @@ export const createNewProduct = async (req: Request, res: Response) => {
 export const getProduct = async (req: Request, res: Response) => {
   const { productId } = req.params;
   try {
-    const product = await Product.findById(productId).populate("category");
+    const product = await Product.findById(productId).populate([
+      "category",
+      "commentSec.user",
+    ]);
     res.status(200).json({ message: "success to get one product", product });
   } catch (error) {
     console.error(error);
@@ -51,11 +54,14 @@ export const getProduct = async (req: Request, res: Response) => {
   }
 };
 export const addComment = async (req: Request, res: Response) => {
-  const { starRating, comment, user } = req.body;
+  const { starRating, comment } = req.body;
   const { productId } = req.params;
+  const { id } = req.user;
   try {
-    const product = await Product.findById(productId).populate("User");
-    product?.commentSec.push({ starRating, comment, user });
+    const product = await Product.findById(productId)
+      .populate("commentSec.user")
+      .select("firstname");
+    product?.commentSec.push({ starRating, comment, user: id });
     const updatedComment = await product?.save();
     res.status(200).json({ message: "success", updatedComment });
   } catch (error) {
