@@ -11,10 +11,10 @@ import { Rating } from "@smastrom/react-rating";
 
 import "@smastrom/react-rating/style.css";
 import CommentSection from "@/components/maindesign/comment";
+import { UserContext } from "../context/user-context";
 
 const ProductDetail = () => {
-  const [rating, setRating] = useState(0);
-  const [avgRating, setAvgrating] = useState(0);
+  const { user } = useContext(UserContext);
   const [refetch, setRefetch] = useState(true);
   const { products } = useContext(ProductContext);
   const [isTrue, setIstrue] = useState(true);
@@ -35,6 +35,7 @@ const ProductDetail = () => {
     discount: 0,
     category: "",
   });
+  const totalAm = product.price * count;
   const sumrating =
     product.commentSec.reduce((accumulator, currentValue) => {
       return accumulator + currentValue.starRating;
@@ -51,7 +52,23 @@ const ProductDetail = () => {
       toast.error("aldaa garlaa product detail error");
     }
   };
-  const avgStar = () => {};
+  const addToCart = async () => {
+    try {
+      const response = await axios.post(`http://localhost:8000/api/v1/carts`, {
+        userId: user?._id,
+        productId: id,
+        totalAmount: totalAm,
+        quantity: count,
+      });
+
+      if (response.status === 200) {
+        toast.success("Successfully added to cart");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      toast.error("Failed to add to cart");
+    }
+  };
   console.log("ene mai ene prodcutaa av", sumrating);
   useEffect(() => {
     getProduct(id);
@@ -135,7 +152,11 @@ const ProductDetail = () => {
             <button
               className="border border-black rounded-full w-8 h-8 flex justify-center items-center hover:bg-gray-300"
               onClick={() => {
-                setCount(count - 1);
+                if (count <= 0) {
+                  setCount(product.quantity);
+                } else {
+                  setCount(count - 1);
+                }
               }}
             >
               -
@@ -144,16 +165,22 @@ const ProductDetail = () => {
             <button
               className="border border-black rounded-full w-8 h-8 flex justify-center items-center hover:bg-gray-300"
               onClick={() => {
-                setCount(count + 1);
+                if (count >= product.quantity) {
+                  setCount(1);
+                } else {
+                  setCount(count + 1);
+                }
               }}
             >
               +
             </button>
           </div>
           <div className="flex flex-col gap-1">
-            <p className="text-xl font-bold">{product.price}</p>
+            <p className="text-xl font-bold">
+              {count <= 0 ? product.price : totalAm}
+            </p>
             <div>
-              <Button className="bg-[#2563EB] rounded-2xl" onClick={() => {}}>
+              <Button className="bg-[#2563EB] rounded-2xl" onClick={addToCart}>
                 Сагсанд нэмэх
               </Button>
             </div>
