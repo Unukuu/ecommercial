@@ -37,9 +37,9 @@ const ForgetPass = () => {
     }
   };
 
-  const handleResendOTP = () => {
-    setCountdown(30);
-  };
+  // const handleResendOTP = () => {
+  //   setCountdown(30);
+  // };
   const handleConfirmOTP = async (value: string) => {
     setOtpValue(value);
     if (value.length === 4) {

@@ -5,7 +5,6 @@ import React, {
   createContext,
   Dispatch,
   SetStateAction,
-  useContext,
   useEffect,
   useState,
 } from "react";

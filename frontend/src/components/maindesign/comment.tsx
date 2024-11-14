@@ -10,7 +10,6 @@ const CommentSection = ({ id }: { id: string | string[] }) => {
   const [product, setProduct] = useState([
     { comment: "", starRating: 0, user: { firstname: "" } },
   ]);
-  const [rating, setRating] = useState(0);
   const [comData, setComData] = useState({
     starRating: 0,
     comment: "",
@@ -59,12 +58,14 @@ const CommentSection = ({ id }: { id: string | string[] }) => {
     getProduct(id);
   }, [refetch]);
 
-  console.log("rating", rating);
   return (
     <>
-      {product.map((com) => {
+      {product.map((com, i) => {
         return (
-          <div className=" flex flex-col justify-center border-b border-dotted py-4">
+          <div
+            key={`product` + i}
+            className=" flex flex-col justify-center border-b border-dotted py-4"
+          >
             <div className="flex gap-3  items-center">
               <p className="text-[14px] font-semibold">{com.user.firstname}</p>
               <Rating style={{ maxWidth: 100 }} value={com.starRating} />

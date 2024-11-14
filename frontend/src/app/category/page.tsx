@@ -16,7 +16,7 @@ const Category = () => {
           <p className="font-bold">Ангилал</p>
           {category.map((cate, i) => {
             return (
-              <div className="flex items-center space-x-2">
+              <div key={`category` + i} className="flex items-center space-x-2">
                 <Checkbox id={`terms${i}`} />
                 <label
                   htmlFor={`terms${i}`}
@@ -32,7 +32,7 @@ const Category = () => {
           <p className="font-bold">Хэмжээ</p>
           {size.map((hemj, i) => {
             return (
-              <div className="flex items-center space-x-2">
+              <div key={`size` + i} className="flex items-center space-x-2">
                 <Checkbox id={`terms${i + 6}`} />
                 <label
                   htmlFor={`terms${i + 6}`}
@@ -46,14 +46,13 @@ const Category = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-5">
-        {products?.map((product) => {
+        {products?.map((product, i) => {
           return (
             <>
-              <div>
+              <div key={`product` + i}>
                 <div className="h-[331px] w-full rounded-2xl overflow-hidden">
                   <img src={product.images[0]} alt="" className="w-full" />
                 </div>
-
                 <p>{product.name}</p>
                 <p className="font-bold">{product.price}</p>
               </div>

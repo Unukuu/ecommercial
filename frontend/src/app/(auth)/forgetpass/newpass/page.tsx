@@ -21,7 +21,7 @@ const NewPass = () => {
     }
     console.log("RT", params.get("resettoken"));
     try {
-      const res = await axios.post(
+      await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/verify-password`,
         { password: password, resetToken: params.get("resettoken") }
       );
