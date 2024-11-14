@@ -27,7 +27,9 @@ export const CategoryProvider = ({
 
   const fetchCategoryData = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/v1/category/add`);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/add`
+      );
       setCategory(res.data.categories);
     } catch (error) {
       console.error("Error fetching user data:", error);

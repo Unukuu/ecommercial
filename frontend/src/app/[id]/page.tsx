@@ -43,7 +43,7 @@ const ProductDetail = () => {
   const getProduct = async (id: string | string[]) => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/v1/products/${id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/products/${id}`
       );
       setProduct(res.data.product);
       setRefetch(!refetch);

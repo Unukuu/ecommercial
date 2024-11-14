@@ -23,13 +23,16 @@ const Signup = () => {
       return;
     }
     try {
-      const res = await axios.post(`http://localhost:8000/api/v1/auth/signup`, {
-        firstname,
-        lastname,
-        email,
-        password,
-        phonenumber,
-      });
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/signup`,
+        {
+          firstname,
+          lastname,
+          email,
+          password,
+          phonenumber,
+        }
+      );
       if (res.status === 201) {
         toast.success("Амжилттай бүртгэглээ", { autoClose: 1000 });
         router.push("/signin");

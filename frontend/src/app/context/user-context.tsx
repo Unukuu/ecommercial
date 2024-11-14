@@ -49,7 +49,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       console.log("token", token);
       const res = await axios.get(
-        `http://localhost:8000/api/v1/auth/current-user`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/current-user`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

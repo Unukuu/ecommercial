@@ -36,7 +36,7 @@ export const ProductProvider = ({
   const fetchProductData = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/v1/products/getall`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/products/getall`
       );
       setProducts(res.data.user);
     } catch (error) {
